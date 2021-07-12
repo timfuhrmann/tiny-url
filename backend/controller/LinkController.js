@@ -1,5 +1,6 @@
 const { client } = require("../redis/index");
 const { getAsync } = require("../redis/index");
+const validUrl = require("valid-url");
 const createUniqueIdentifier = require("../util/identifier");
 const getTinyUrl = require("../util/tinyUrl");
 
@@ -7,8 +8,8 @@ class LinkController {
   static async createLink(req, res) {
     const { link } = req.body;
 
-    if (!link) {
-      return res.status(400).send("Link not provided.");
+    if (!link || !validUrl.isUri(link)) {
+      return res.status(400).send("Unknown link.");
     }
 
     try {
