@@ -30,7 +30,7 @@ yarn dev
 Make sure you have a local redis instance running.
 
 ```bash
-node app.js
+npm run start
 # or
-nodemon app.js
+yarn start
 ```
