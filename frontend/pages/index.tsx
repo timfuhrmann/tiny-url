@@ -1,18 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 import { Opener } from "../app/components/Opener";
 import { Input } from "../app/components/Input";
-import styled from "styled-components";
 
-const InputWrapper = styled.div`
-    //margin-top: 2rem;
+const HomeWrapper = styled.div`
+    padding: 10rem 0;
+
+    @media ${p => p.theme.bp.xl} {
+        padding: 0 0 10rem;
+    }
 `;
 
 const Home: React.FC = () => {
     return (
-        <div>
+        <HomeWrapper>
             <Opener />
             <Input />
-        </div>
+        </HomeWrapper>
     );
 };
 

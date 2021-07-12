@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Button = styled.button`
     height: 4rem;
-    margin-left: 2rem;
     padding: 0 1rem;
     border-radius: 0.5rem;
     background-color: ${p => p.theme.gray300};
@@ -20,5 +19,10 @@ export const Button = styled.button`
     &:active {
         background-color: ${p => p.theme.gray100};
         border-color: ${p => p.theme.gray600};
+    }
+
+    @media ${p => p.theme.bp.l} {
+        padding: 0 2rem;
+        height: 5rem;
     }
 `;

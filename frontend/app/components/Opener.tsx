@@ -1,23 +1,41 @@
-import React, { useEffect, useRef } from "react";
-import lottie from "lottie-web";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { Content } from "../css/content";
 import { Headline } from "../css/typography";
+import { useLottie } from "../lib/Lottie";
 
 const OpenerWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    min-height: 70rem;
+    padding: 0 0 10rem;
+    text-align: center;
+
+    @media ${p => p.theme.bp.xl} {
+        padding: 0;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+        min-height: 60rem;
+    }
 `;
 
 const OpenerFrame = styled.div`
-    width: 80rem;
-    margin-top: -12.5rem;
+    width: 100%;
+    max-width: 50rem;
+    margin-top: -2.5rem;
+
+    @media ${p => p.theme.bp.xl} {
+        width: 80rem;
+        max-width: none;
+        margin-top: -12.5rem;
+    }
 `;
 
 const OpenerContent = styled.div`
-    padding-right: 5rem;
+    @media ${p => p.theme.bp.xl} {
+        padding-right: 5rem;
+    }
 `;
 
 const OpenerText = styled.div`
@@ -27,21 +45,8 @@ const OpenerText = styled.div`
 
 export const Opener: React.FC = () => {
     const frameRef = useRef<HTMLDivElement | null>(null);
-    useEffect(() => {
-        if (!frameRef.current) {
-            return;
-        }
+    useLottie(frameRef, "/opener.json");
 
-        const animation = lottie.loadAnimation({
-            container: frameRef.current,
-            loop: true,
-            autoplay: true,
-            path: "/opener.json",
-            name: "opener",
-        });
-
-        return () => animation.destroy("opener");
-    }, []);
     return (
         <Content>
             <OpenerWrapper>

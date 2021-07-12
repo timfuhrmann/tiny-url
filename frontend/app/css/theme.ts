@@ -17,10 +17,10 @@ export const theme = {
     red600: "#EC5B62",
     red700: "#F76D74",
 
-    green400: "#268E6C",
-    green500: "#2D9D78",
-    green600: "#33AB84",
-    green700: "#39B990",
+    blue400: "#1F3140",
+    blue500: "#193750",
+    blue600: "#1E4260",
+    blue700: "#2A5980",
     //endregion
 
     //region Breakpoints

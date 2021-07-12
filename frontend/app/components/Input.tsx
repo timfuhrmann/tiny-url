@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import styled from "styled-components";
 import { Content } from "../css/content";
 import { useData } from "../context/DataProvider";
 import { ActionText } from "../css/typography";
 import { Button } from "./Button";
+import { CopyLink } from "./CopyLink";
 
 const InputWrapper = styled.div`
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 0.5rem;
     border: 0.1rem solid ${p => p.theme.gray200};
     background-color: ${p => p.theme.gray100};
+
+    @media ${p => p.theme.bp.xl} {
+        padding: 4rem;
+        padding-right: 5rem;
+    }
 `;
 
 const InputResult = styled.div<{ active: boolean }>`
@@ -21,19 +27,11 @@ const ResultsInner = styled.div`
     padding-top: 2rem;
 `;
 
-const InputUrl = styled.input`
-    background: none;
-    border: none;
-    width: 100%;
-    cursor: pointer;
-    color: ${p => p.theme.gray900};
-`;
-
 const InputError = styled.div`
     color: ${p => p.theme.red700};
 `;
 
-const InputInner = styled.div`
+const InputForm = styled.form`
     display: flex;
     align-items: center;
 `;
@@ -43,6 +41,7 @@ const InputBox = styled.input`
     background: none;
     height: 4rem;
     padding: 0 1rem;
+    margin-right: 1rem;
     border-radius: 0.5rem;
     border: 0.1rem solid ${p => p.theme.gray400};
     color: ${p => p.theme.gray900};
@@ -57,18 +56,29 @@ const InputBox = styled.input`
     &:not(:placeholder-shown) {
         border-color: ${p => p.theme.gray600};
     }
+
+    @media ${p => p.theme.bp.l} {
+        height: 5rem;
+        margin-right: 2rem;
+    }
 `;
 
 export const Input: React.FC = () => {
     const { createLink } = useData();
-    const [string, setString] = useState<string>("");
+    const [value, setValue] = useState<string>("");
     const [tinyUrl, setTinyUrl] = useState<string>("");
     const [errors, setErrors] = useState<string[]>([]);
 
-    const onSubmit = async () => {
+    const onSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+
+        if (!value) {
+            return;
+        }
+
         reset();
 
-        const { tinyUrl, errors } = await createLink(string);
+        const { tinyUrl, errors } = await createLink(value);
 
         if (errors) {
             setErrors(errors);
@@ -76,15 +86,6 @@ export const Input: React.FC = () => {
         }
 
         setTinyUrl(tinyUrl);
-    };
-
-    const copyToClipboard = (e: React.MouseEvent) => {
-        const text = e.target as HTMLInputElement;
-
-        text.select();
-        text.setSelectionRange(0, 99999);
-
-        document.execCommand("copy");
     };
 
     const reset = () => {
@@ -95,30 +96,20 @@ export const Input: React.FC = () => {
     return (
         <Content>
             <InputWrapper>
-                <InputInner>
+                <InputForm onSubmit={onSubmit}>
                     <InputBox
                         type="text"
-                        placeholder="Shorten your link here..."
-                        value={string}
-                        onInput={e => setString((e.target as HTMLInputElement).value)}
+                        placeholder="Shorten your link ..."
+                        value={value}
+                        onInput={e => setValue((e.target as HTMLInputElement).value)}
                     />
-                    <Button type="button" onClick={onSubmit}>
+                    <Button type="submit">
                         <ActionText>Submit</ActionText>
                     </Button>
-                </InputInner>
+                </InputForm>
                 <InputResult active={!!tinyUrl || errors.length > 0}>
                     <ResultsInner>
-                        {tinyUrl && (
-                            <div>
-                                <span>Your TinyURL: </span>
-                                <InputUrl
-                                    type="text"
-                                    value={tinyUrl}
-                                    onClick={copyToClipboard}
-                                    readOnly
-                                />
-                            </div>
-                        )}
+                        {tinyUrl && <CopyLink>{tinyUrl}</CopyLink>}
                         {errors.length > 0 &&
                             errors.map(error => <InputError key={error}>{error}</InputError>)}
                     </ResultsInner>

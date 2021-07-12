@@ -9,7 +9,13 @@ const TemplateWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+`;
+
+const TemplateInner = styled.div`
     display: flex;
+    width: 100%;
+    height: 100%;
 `;
 
 const TemplateFrame = styled.div`
@@ -18,6 +24,7 @@ const TemplateFrame = styled.div`
 `;
 
 const TemplateStage = styled.div`
+    height: 100%;
     overflow-y: auto;
 `;
 
@@ -25,14 +32,17 @@ export const Template: React.FC = ({ children }) => {
     const [historyActive, setHistoryActive] = useState<boolean>(false);
 
     return (
-        <div>
-            <TemplateWrapper>
+        <TemplateWrapper>
+            <TemplateInner>
                 <TemplateFrame>
-                    <Navigation toggleHistory={() => setHistoryActive(prevState => !prevState)} />
+                    <Navigation
+                        historyActive={historyActive}
+                        toggleHistory={() => setHistoryActive(prevState => !prevState)}
+                    />
                     <TemplateStage>{children}</TemplateStage>
                 </TemplateFrame>
-                <History active={historyActive} />
-            </TemplateWrapper>
-        </div>
+                <History active={historyActive} onClose={() => setHistoryActive(false)} />
+            </TemplateInner>
+        </TemplateWrapper>
     );
 };
