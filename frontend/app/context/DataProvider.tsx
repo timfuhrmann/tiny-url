@@ -16,6 +16,8 @@ const DataContext = createContext<DataProviderType>({} as DataProviderType);
 
 const STORAGE_HISTORY = "linkify-history";
 
+const baseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
+
 export const DataProvider: React.FC = ({ children }) => {
     const [history, setHistory] = useState<Data.Url[]>([]);
 
@@ -42,7 +44,7 @@ export const DataProvider: React.FC = ({ children }) => {
     }, [history]);
 
     const getLinks = async (identifiers: string[]) => {
-        const urls = await fetch("http://localhost:8080/link", {
+        const urls = await fetch(baseUrl + "/link", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -60,7 +62,7 @@ export const DataProvider: React.FC = ({ children }) => {
             return { tinyUrl: "", errors: validation.website };
         }
 
-        const url = await fetch("http://localhost:8080/create", {
+        const url = await fetch(baseUrl + "/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
