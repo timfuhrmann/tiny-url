@@ -1,4 +1,6 @@
-**In progress:** this is a kind of TinyURL project built with [Next.js](https://nextjs.org/) and [Node.js Express](https://expressjs.com/de/).
+**In progress:** this is a kind of TinyURL demo built with [Next.js](https://nextjs.org/) and [Node.js Express](https://expressjs.com/de/).
+
+Check it out: https://tiny-url-lzx99evvc-timfuhrmann.vercel.app/
 
 1. Request a "TinyURL"
 2. Requested links will be saved in history giving additional information about a link, such as total clicks
