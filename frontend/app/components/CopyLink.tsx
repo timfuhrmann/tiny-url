@@ -43,10 +43,10 @@ const CopyInfo = styled.div<{ active: boolean }>`
 `;
 
 interface CopyLinkProps {
-    onCopy?: () => void;
+    value: string;
 }
 
-export const CopyLink: React.FC<CopyLinkProps> = ({ onCopy, children }) => {
+export const CopyLink: React.FC<CopyLinkProps> = ({ value }) => {
     const [copied, setCopied] = useState<boolean>(false);
 
     useEffect(() => {
@@ -63,16 +63,15 @@ export const CopyLink: React.FC<CopyLinkProps> = ({ onCopy, children }) => {
         };
     }, [copied]);
 
-    const handleCopy = (e: React.MouseEvent) => {
-        const button = e.target as HTMLButtonElement;
-        copyToClipboard(button.innerText);
+    const handleCopy = () => {
+        copyToClipboard(value);
         setCopied(true);
     };
 
     return (
         <>
             <CopyButton type="button" onClick={handleCopy}>
-                {children}
+                Copy Tiny URL
                 <ClipboardIcon>
                     <Icon name="clipboard" icon={Clipboard} />
                 </ClipboardIcon>

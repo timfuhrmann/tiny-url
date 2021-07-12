@@ -115,7 +115,7 @@ export const History: React.FC<HistoryProps> = ({ active, onClose }) => {
                         {history.map(item => (
                             <HistoryItem key={item.id}>
                                 <ItemLink>
-                                    <CopyLink>{item.tinyUrl}</CopyLink>
+                                    <CopyLink value={item.tinyUrl} />
                                 </ItemLink>
                                 <ItemContent>
                                     <ItemLink>{item.link}</ItemLink>

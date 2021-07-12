@@ -18,12 +18,7 @@ const InputWrapper = styled.div`
     }
 `;
 
-const InputResult = styled.div<{ active: boolean }>`
-    max-height: ${p => (p.active ? "none" : 0)};
-    overflow: hidden;
-`;
-
-const ResultsInner = styled.div`
+const InputResult = styled.div`
     padding-top: 2rem;
 `;
 
@@ -68,6 +63,7 @@ export const Input: React.FC = () => {
     const [value, setValue] = useState<string>("");
     const [tinyUrl, setTinyUrl] = useState<string>("");
     const [errors, setErrors] = useState<string[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -77,8 +73,11 @@ export const Input: React.FC = () => {
         }
 
         reset();
+        setLoading(true);
 
         const { tinyUrl, errors } = await createLink(value);
+
+        setLoading(false);
 
         if (errors) {
             setErrors(errors);
@@ -107,12 +106,11 @@ export const Input: React.FC = () => {
                         <ActionText>Submit</ActionText>
                     </Button>
                 </InputForm>
-                <InputResult active={!!tinyUrl || errors.length > 0}>
-                    <ResultsInner>
-                        {tinyUrl && <CopyLink>{tinyUrl}</CopyLink>}
-                        {errors.length > 0 &&
-                            errors.map(error => <InputError key={error}>{error}</InputError>)}
-                    </ResultsInner>
+                <InputResult>
+                    {loading && "Loading..."}
+                    {tinyUrl && <CopyLink value={tinyUrl} />}
+                    {errors.length > 0 &&
+                        errors.map(error => <InputError key={error}>{error}</InputError>)}
                 </InputResult>
             </InputWrapper>
         </Content>
