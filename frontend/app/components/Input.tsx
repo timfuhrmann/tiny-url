@@ -106,12 +106,14 @@ export const Input: React.FC = () => {
                         <ActionText>Submit</ActionText>
                     </Button>
                 </InputForm>
-                <InputResult>
-                    {loading && "Loading..."}
-                    {tinyUrl && <CopyLink value={tinyUrl} />}
-                    {errors.length > 0 &&
-                        errors.map(error => <InputError key={error}>{error}</InputError>)}
-                </InputResult>
+                {(loading || tinyUrl || errors.length > 0) && (
+                    <InputResult>
+                        {loading && "Loading..."}
+                        {tinyUrl && <CopyLink value={tinyUrl} />}
+                        {errors.length > 0 &&
+                            errors.map(error => <InputError key={error}>{error}</InputError>)}
+                    </InputResult>
+                )}
             </InputWrapper>
         </Content>
     );

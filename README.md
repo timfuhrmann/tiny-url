@@ -1,6 +1,6 @@
 **In progress:** this is a kind of TinyURL demo built with [Next.js](https://nextjs.org/) and [Node.js Express](https://expressjs.com/de/).
 
-Check it out: https://tiny-url-pied.vercel.app/
+Check it out: https://tiny-url-pied.vercel.app/ - Backend requests might take a little longer at first, in case the heroku dyno is sleeping.
 
 1. Request a "TinyURL"
 2. Requested links will be saved in history giving additional information about a link, such as total clicks
