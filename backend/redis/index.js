@@ -1,6 +1,8 @@
 const redis = require("redis");
 const { promisify } = require("util");
-const client = redis.createClient({ host: "127.0.0.1", port: "6379" });
+const { configRedis } = require("../config");
+
+const client = redis.createClient({ url: configRedis.url });
 
 client.on("error", (error) => {
   console.error(error);

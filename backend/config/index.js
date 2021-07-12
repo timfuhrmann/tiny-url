@@ -1,3 +1,7 @@
 require("dotenv").config();
 
-module.exports = {};
+module.exports = {
+  configRedis: {
+    url: process.env.REDIS_URL,
+  },
+};
