@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Content } from "../css/content";
 import { Headline } from "../css/typography";
 import { useLottie } from "../lib/Lottie";
+import { Icon, OpenerLoading } from "../lib/Icon";
 
 const OpenerWrapper = styled.div`
     display: flex;
@@ -45,7 +46,7 @@ const OpenerText = styled.div`
 
 export const Opener: React.FC = () => {
     const frameRef = useRef<HTMLDivElement | null>(null);
-    useLottie(frameRef, "/opener.json");
+    const { loading } = useLottie(frameRef, "/opener.json");
 
     return (
         <Content>
@@ -57,7 +58,10 @@ export const Opener: React.FC = () => {
                         are performing.
                     </OpenerText>
                 </OpenerContent>
-                <OpenerFrame ref={frameRef} />
+                <OpenerFrame hidden={!loading}>
+                    <Icon name="opener-loading" icon={OpenerLoading} />
+                </OpenerFrame>
+                <OpenerFrame ref={frameRef} hidden={loading} />
             </OpenerWrapper>
         </Content>
     );
