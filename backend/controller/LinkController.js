@@ -38,9 +38,12 @@ class LinkController {
 
       for (const id of identifiers) {
         const link = await getAsync("link:" + id);
-        const clicks = (await getAsync("clicks:" + id)) || 0;
-        const tinyUrl = getTinyUrl(req, id);
-        urls.push({ id, tinyUrl, link, clicks });
+
+        if (link) {
+          const clicks = (await getAsync("clicks:" + id)) || 0;
+          const tinyUrl = getTinyUrl(req, id);
+          urls.push({ id, tinyUrl, link, clicks });
+        }
       }
 
       res.status(200).json(urls);
