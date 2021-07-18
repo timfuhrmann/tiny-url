@@ -1,13 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("../swagger");
+const { origin } = require("../config");
 
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(helmet());
+app.use(cors({ origin }));
 
 app.use(require("../router"));
 
