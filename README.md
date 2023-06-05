@@ -19,9 +19,6 @@ Backend requests might take a little longer at first, in case the heroku dyno is
 - [Heroku](https://www.heroku.com/)
 - [Swagger UI](https://swagger.io/tools/swagger-ui/)
 
-## API Docs
-Swagger: https://tiny-url-next.herokuapp.com/api-docs/swagger/
-
 ## Getting Started
 Run the development server:
 
